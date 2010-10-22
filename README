@@ -1,0 +1,13 @@
+sinxml
+
+For very simple xml usage.
+Basically for saving and loading data used in games.
+This library is not meant to handle all xml features, only the ones I need.
+
+All it supports now is:
+version
+element hierarchy
+element values
+save file
+load file
+

@@ -37,7 +37,7 @@ void Document::Save_file(const std::string& filename)
 	f.close();
 }
 
-void Document::Load_file(const std::string& filename)
+bool Document::Load_file(const std::string& filename)
 {
 	if(root)
 	{
@@ -46,6 +46,8 @@ void Document::Load_file(const std::string& filename)
 	}
 	std::ifstream f;
 	f.open(filename.c_str());
+	if(!f.is_open())
+		return false;
 
 	char b[512];
 	f.getline(b, 511);
@@ -100,6 +102,7 @@ void Document::Load_file(const std::string& filename)
 		delete parent;
 	
 	f.close();
+	return true;
 }
 
 }

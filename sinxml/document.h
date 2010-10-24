@@ -16,7 +16,7 @@ public:
 	void Set_root(Element* e);
 	Element* Get_root();
 	void Save_file(const std::string& filename);
-	void Load_file(const std::string& filename);
+	bool Load_file(const std::string& filename);
 private:	
 	std::string version;
 	Element* root;

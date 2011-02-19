@@ -59,14 +59,34 @@ void Element::Add_child(Element* e)
 	e->parent = this;
 }
 
+void Element::Set_attribute(const std::string& key, const std::string& value)
+{
+	attributes[key] = value;
+}
+
+const std::string& Element::Get_attribute(const std::string& key) const
+{
+	Attributes::const_iterator i = attributes.find(key);
+	if(i != attributes.end())
+		return i->second;
+	throw "Attribute does not exist";
+}
+
 void Element::Save_file(std::ofstream& f, const std::string& indent)
 {
-	f<<indent<<"<"<<name<<">"<<std::endl;
+//	f<<indent<<"<"<<name<<">"<<std::endl;
+	f<<indent<<"<"<<name;
+	for(Attributes::iterator i = attributes.begin(); i != attributes.end(); ++i)
+	{
+		f<<" \""<<i->first<<"\"=\""<<i->second<<"\"";
+	}
+	f<<">"<<std::endl;
+	
 	if(value != "")
-		f<<indent<<" "<<value<<std::endl;
+		f<<indent<<"\t"<<value<<std::endl;
 	for(Children::iterator i = children.begin(); i!=children.end(); ++i)
 	{
-		(*i)->Save_file(f, indent + " ");
+		(*i)->Save_file(f, indent + "\t");
 	}
 	f<<indent<<"</"<<name<<">"<<std::endl;
 }

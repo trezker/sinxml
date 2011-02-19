@@ -14,6 +14,9 @@ int main()
 
 	Element* x = new Element("x", "10");
 	platform->Add_child(x);
+	x->Set_attribute("foo", "baha");
+	x->Set_attribute("att", "23");
+	std::cout<<x->Get_attribute("att")<<std::endl;
 	
 	document.Save_file("test.xml");
 	
@@ -26,7 +29,9 @@ int main()
 	{
 		std::cout<<(*i)->Get_name()<<" = "<<(*i)->Get_value()<<std::endl;
 		std::cout<<(*i)->Get_child("x")->Get_value()<<std::endl;
+		std::cout<<(*i)->Get_child("x")->Get_attribute("att")<<std::endl;
 	}
 	parent->Get_child("x");
+	
 	return 0;
 }

@@ -78,7 +78,7 @@ void Element::Save_file(std::ofstream& f, const std::string& indent)
 	f<<indent<<"<"<<name;
 	for(Attributes::iterator i = attributes.begin(); i != attributes.end(); ++i)
 	{
-		f<<" \""<<i->first<<"\"=\""<<i->second<<"\"";
+		f<<" "<<i->first<<"=\""<<i->second<<"\"";
 	}
 	f<<">"<<std::endl;
 	

@@ -38,6 +38,13 @@ void Document::Save_file(const std::string& filename)
 	f.close();
 }
 
+bool Check_end(int n, const std::string& line)
+{
+	if(n==-1 || line[n] == '>' || line[n] == '/')
+		return true;
+	return false;
+}
+
 bool Document::Load_file(const std::string& filename)
 {
 	if(root)
@@ -86,19 +93,19 @@ bool Document::Load_file(const std::string& filename)
 				
 				Element *element = new Element(name);
 
-				while(1)
+				while(!Check_end(ne, line))
 				{
-					int key_begin = line.find_first_of("\"", ne+1);
-					if(key_begin >= line.npos) break;
-					int key_end = line.find_first_of("\"", key_begin+1);
-					if(key_end >= line.npos) break;
+					int key_begin = line.find_first_not_of(" \t", ne+1);
+					if(Check_end(key_begin, line)) break;
+					int key_end = line.find_first_of("> \t/=", key_begin+1);
+					if(Check_end(key_end, line)) break;
 
 					int value_begin = line.find_first_of("\"", key_end+1);
-					if(value_begin >= line.npos) break;
+					if(Check_end(value_begin, line)) break;
 					int value_end = line.find_first_of("\"", value_begin+1);
-					if(value_end >= line.npos) break;
+					if(Check_end(value_end, line)) break;
 
-					std::string key = line.substr(key_begin+1, key_end-key_begin-1);
+					std::string key = line.substr(key_begin, key_end-key_begin);
 					std::string value = line.substr(value_begin+1, value_end-value_begin-1);
 					std::cout<<key<<"="<<value<<std::endl;
 					element->Set_attribute(key, value);
